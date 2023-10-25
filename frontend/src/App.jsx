@@ -4,18 +4,19 @@ import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { Navbar } from './components';
 
 export const loader = async () => {
-  const user = localStorage.getItem('user');
-  return { user };
+  const userid = localStorage.getItem('userid');
+  return { userid };
 }
 
 const App = () => {
-  const { user } = useLoaderData();
+  const { userid } = useLoaderData();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (user === null) navigate('/auth');
-  //   else navigate('/home/dashboard');
-  // }, []);
+  useEffect(() => {
+    console.log(userid)
+    if (userid === null) navigate('/auth');
+    else navigate('/home/dashboard');
+  }, []);
 
 
   return (
