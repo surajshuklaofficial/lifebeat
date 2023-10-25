@@ -1,13 +1,27 @@
-import React from 'react';
-import { Router,  } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 
-import { Home, Auth } from './containers';
+import { Navbar } from './components';
+
+export const loader = async () => {
+  const user = localStorage.getItem('user');
+  return { user };
+}
 
 const App = () => {
+  const { user } = useLoaderData();
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (user === null) navigate('/auth');
+  //   else navigate('/home/dashboard');
+  // }, []);
+
+
   return (
     <>
-      <Home />
-      <Auth />
+      <Navbar />
+      <Outlet />
     </>
   )
 }

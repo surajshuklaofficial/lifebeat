@@ -6,3 +6,49 @@
 .flex-center {
     @apply flex justify-center items-center;
 }
+
+.active-sidemenu-link {
+    @apply text-green-500 font-bold block;
+}
+
+.active-nav-link {
+    @apply text-green-500 font-bold block;
+}
+
+/* custom-scrollbar.css */
+.homecontents::-webkit-scrollbar {
+width: 0px;
+}
+
+/* custom-scrollbar.css */
+.sidebar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+background: transparent;
+}
+
+:hover.sidebar::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 10px;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb {
+background: #555;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+::-webkit-scrollbar-track {
+background: transparent;
+}
+
+:hove
+::-webkit-scrollbar-thumb {
+background: transparent;
+border-radius: 10px;
+}
+    

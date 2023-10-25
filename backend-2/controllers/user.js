@@ -1,6 +1,6 @@
 import { User, MedicalRecord } from '../models/index.js';
 import Appointment from '../models/appointment.js';
-import Doctor from '../models/doctor.js';
+// import Doctor from '../models/doctor.js';
 
 const fetchMedicalRecord = async (req, res) => {
 

@@ -1,22 +1,34 @@
-
-import { Navbar, Profile, SideMenu, Metrics, ActivityGraph, DailyGoals, ScoreCard } from '../../components';
+import { useEffect, useState } from 'react';
+import { Outlet, useLoaderData } from 'react-router-dom';
+import { Navbar, Profile, SideMenu } from '../../components';
  
+export const loader = () => {
+  const username = localStorage.getItem('username');
+  console.log(username);
+  return { username };
+}
+
 const Home = () => {
+  const {username }= useLoaderData();
+  const [sideMenu, setSideMenu] = useState(true);
+
+  useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setSideMenu(false);
+    }
+  }, [innerWidth])
+
   return (
-    <section className='flex flex-row w-full justify-between'>
+    <section className='flex flex-row w-full justify-between h-screen bg-green-100'>
 
-      <SideMenu />
-      <div className='p-4 w-full mx-24'>
-        <Navbar />
-        <Metrics />
-        <DailyGoals />
+      { sideMenu && <SideMenu setSideMenu={setSideMenu} username={username}/> }
 
-        <div>
-          <ActivityGraph />
-          <ScoreCard />
-        </div>
+      <div className='w-full' >
+        {/* <Navbar setSideMenu={setSideMenu} sideMenu={sideMenu}/> */}
+        <Outlet />
       </div>
-      <Profile />
+
+      <Profile username = {username} />
     </section>
   )
 }

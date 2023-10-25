@@ -1,6 +1,6 @@
 const Metrics = () => {
   return (
-    <section className="mt-16 ">
+    <section className=" bg-white rounded-lg py-8 m-4 text-green-500 shadow-md">
         <ul className="grid grid-cols-4 gap-8">
             <li className="text-center">Calories Burn</li>
             <li className="text-center">Steps</li>
