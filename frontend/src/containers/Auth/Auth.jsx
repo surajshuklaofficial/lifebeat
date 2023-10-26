@@ -12,9 +12,10 @@ export const action = async ({ request, action }) => {
       return redirect('/auth');
     }
 
-    const URL = `http://localhost:3000/api/v1/auth/${userData.action}`;
+    // const URL = `http://localhost:3000/api/v1/auth/${userData.action}`;
+    const DEPLOYMENT_URL = `http://52.66.136.161:3000/api/v1/auth/${userData.action}`;
 
-    const response = await axios.post(URL, userData);
+    const response = await axios.post(DEPLOYMENT_URL, userData);
     
     console.log(response);
     localStorage.setItem('token', response.data.token, 'token');
