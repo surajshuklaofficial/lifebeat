@@ -14,7 +14,7 @@ export const action = async ({ request, action }) => {
 
     // const URL = `http://localhost:3000/api/v1/auth/${userData.action}`;
     // const AWS_URL = `http://52.66.136.161:3000/api/v1/auth/${userData.action}`;
-    const DEPLOYMENT_URL = `https://health-monitoring-system.onrender.com/v1/auth/${userData.action}`;
+    const DEPLOYMENT_URL = `https://health-monitoring-system.onrender.com/api/v1/auth/${userData.action}`;
 
     const response = await axios.post(DEPLOYMENT_URL, userData);
     
