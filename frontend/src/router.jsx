@@ -1,8 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import App, { loader as appLoader } from "./App";
-import { Home, Auth, ErrorPage, Community, EmergencyServices, AboutUs, Profile } from "./containers";
-import { authAction, profileLoader  } from "./containers";
+import { Home, Auth, ErrorPage, Community, EmergencyServices, AboutUs, ProfilePage } from "./containers";
+import { authAction, profileLoader, profilePageLoader, profilePageAction  } from "./containers";
 import { Dashboard, MedicalRecord } from './components';
 import {  } from './components';
 
@@ -13,11 +13,13 @@ const router = createBrowserRouter([
       errorElement: <ErrorPage />,
       loader: appLoader,
       children: [
+        { index: true, element: <Home />, loader: profileLoader , childern: [{ index: true, element: <Dashboard /> }]},
         {
           path: 'home',
           element: <Home />,
           loader: profileLoader,
           children: [
+            { index: true, element: <Dashboard /> },
             {
               path: 'dashboard',
               element: <Dashboard />,
@@ -58,8 +60,10 @@ const router = createBrowserRouter([
           element: <AboutUs />
         },
         {
-          path: 'profile/:id',
-          element: <Profile />
+          path: 'profile/:id/:username',
+          element: <ProfilePage />,
+          loader: profilePageLoader,
+          action: profilePageAction
         }
       ]
     }

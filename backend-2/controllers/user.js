@@ -41,7 +41,7 @@ const createMedicalRecord = async (req, res) => {
 
 const updateMedicalRecord = async (req, res) => {
     const userId = req.params.id;
-
+    
     try {
         const updatedMedicalRecord = await MedicalRecord.findOneAndUpdate(
         {user: userId},

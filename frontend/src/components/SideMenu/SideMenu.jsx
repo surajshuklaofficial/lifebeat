@@ -1,13 +1,16 @@
-import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { NavLink, useLoaderData, useNavigate } from 'react-router-dom';
 import { LOGO, PROFILE } from '../../assets';
+import SidebarStateContext from '../../contexts/SidebarStateContext';
 
-const SideMenu = ({setSideMenu, username}) => {
+const SideMenu = () => {
   const navigate = useNavigate();
+  const { setSideMenu } = useContext(SidebarStateContext)
 
-  const id = localStorage.getItem('userid');
+  const { userid, username } = useLoaderData();
+
   return (
-    <aside className="px-4 py-16 w-60 bg-white md:m-4 rounded-lg shadow-md absolute right-0 z-10 lg:relative">
+    <aside className="px-4 py-16 w-60 bg-white md:m-4 rounded-lg shadow-md absolute top-2 right-0 z-10 lg:relative">
       <button 
         className='absolute right-4 top-4 lg:hidden'
         onClick={() => setSideMenu(prevState => !prevState)}
@@ -16,10 +19,10 @@ const SideMenu = ({setSideMenu, username}) => {
       </button>
       <figure className="flex-center flex-col">
         {innerWidth > 1024 ? 
-          <img className="w-20 h-20" src={LOGO} alt="logo" onClick={() => navigate('/about-us')}/> : 
+          <img className="w-20 h-20 hidden" src={LOGO} alt="logo" onClick={() => navigate('/about-us')}/> : 
           <>
-            <img className="rounded-full w-20 h-20 mb-2" src={PROFILE} alt="profile-photo" onClick={() => navigate(`/profile/${id}`)}/>
-            <h3 className="text-lg font-semibold text-green-800">{username || 'Suraj Shukla'}</h3>
+            <img className="rounded-full w-20 h-20 mb-2" src={PROFILE} alt="profile-photo" onClick={() => navigate(`/profile/${userid}/${username}`)}/>
+            <h3 className="text-lg font-semibold text-green-800">{username}</h3>
           </>
         }
 

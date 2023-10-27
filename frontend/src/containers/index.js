@@ -4,6 +4,6 @@ import ErrorPage from './ErrorPage/ErrorPage';
 import Community from './Community/Community';
 import EmergencyServices from './EmergencyServices/EmergencyServices';
 import AboutUs from './AboutUs/AboutUs';
-import Profile from './Profile/Profile';
+import ProfilePage, { loader as profilePageLoader, action as profilePageAction } from './ProfilePage/ProfilePage';
 
-export { Home, profileLoader, Auth, authAction, ErrorPage, Community, EmergencyServices, AboutUs, Profile };
+export { Home, profileLoader, Auth, authAction, ErrorPage, Community, EmergencyServices, AboutUs, ProfilePage, profilePageLoader, profilePageAction };
