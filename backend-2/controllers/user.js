@@ -1,6 +1,5 @@
 import { User, MedicalRecord } from '../models/index.js';
 import Appointment from '../models/appointment.js';
-// import Doctor from '../models/doctor.js';
 
 const fetchMedicalRecord = async (req, res) => {
 
@@ -12,10 +11,13 @@ const fetchMedicalRecord = async (req, res) => {
         if (medical_record !== null) {
             res.status(200).json(medical_record);
         } else {
-            res.status(404).json({message: 'Medical Record not found for this user'});
+            const medicalRecord = new MedicalRecord({ ...req.body, user: user_id});
+            await medicalRecord.save();
+            res.status(201).json({ medicalRecord }); // 201 Created
         }
 
     } catch (err) {
+        console.log(err)
         res.status(500).json({message: err.message});
     }
 }

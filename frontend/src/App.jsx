@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useRouteLoaderData  } from 'react-router-dom';
+import { Outlet, useNavigate, useLoaderData  } from 'react-router-dom';
 
 import { Navbar } from './components';
 import { SidebarStateContext } from './contexts'
@@ -10,7 +10,7 @@ export const loader = async () => {
 }
 
 const App = () => {
-  const userid = useRouteLoaderData();
+  const { userid } = useLoaderData();
   const navigate = useNavigate();
   const [sideMenu, setSideMenu] = useState(true);
 
@@ -21,8 +21,8 @@ const App = () => {
   }, [innerWidth])
 
   useEffect(() => {
-    if (userid === null) navigate('/auth');
-    // else navigate('/home');
+    if (userid === undefined) navigate('/auth');
+    else navigate('/home');
   }, []);
 
   return (
