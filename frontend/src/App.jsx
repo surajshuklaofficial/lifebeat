@@ -21,7 +21,8 @@ const App = () => {
   }, [innerWidth])
 
   useEffect(() => {
-    if (userid === undefined) navigate('/auth');
+    console.log(userid);
+    if (userid === undefined || userid === null) navigate('/auth');
     else navigate('/home');
   }, []);
 
