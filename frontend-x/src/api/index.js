@@ -19,8 +19,6 @@ API.interceptors.request.use((req) => {
 export const  fetchMedicalRecord = (id) => API.get(`/user/${id}/medical-record`);
 export const  updateMedicalRecord = (id, data) => API.patch(`/user/${id}/medical-record`, data);
 
-// userData.action == signin || signup
-export const auth = (userData) => API.post(`/auth/${userData.action}`, userData);
 
 
 

@@ -4,30 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
+
 *{
     font-family: Poppins, sans-serif;
 }
-
 .flex-center {
   @apply flex justify-center items-center;
 }
 
-.sidebar-navlinks {
-  @apply hover:dark:border-ascent-dark hover:border-ascent-light hover:border rounded-md w-40 block sm:p-3 py-4 px-1;
+.active-sidemenu-link {
+  @apply text-green-500 font-bold block;
 }
 
-.active {
-  @apply text-ascent-light dark:text-ascent-dark;
+.active-nav-link {
+  @apply text-green-500 font-bold block;
 }
 
-/* Comment out the following code */
-
-.custom-scrollbar.css
+/* custom-scrollbar.css */
 .homecontents::-webkit-scrollbar {
   width: 0px;
 }
 
-custom-scrollbar.css
+/* custom-scrollbar.css */
 .sidebar::-webkit-scrollbar {
   width: 10px;
 }

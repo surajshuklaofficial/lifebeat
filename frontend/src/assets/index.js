@@ -1,5 +1,12 @@
 import LOGO from './logo.png';
 import PROFILE from './profile.jpg';
-import HAMBURGERMENU from './hamburger.png';
+import BGWHITE from './bgWhite.png';
+import BGIMG from './bgIMG.png';
 
-export {LOGO, PROFILE, HAMBURGERMENU};
+import HAMBURGERMENU from './icons/hamburger.png';
+import LIGHTBULB from './icons/light-bulb.png';
+import CROSS from './icons/close.png'
+
+import HERO from './GYM1.jpg';
+
+export {LOGO, PROFILE, HAMBURGERMENU, LIGHTBULB, CROSS, BGWHITE, BGIMG, HERO};

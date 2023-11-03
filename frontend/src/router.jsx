@@ -1,71 +1,54 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
-import App, { loader as appLoader } from "./App";
-import { Home, Auth, ErrorPage, Community, EmergencyServices, AboutUs, ProfilePage } from "./containers";
-import { authAction, profileLoader, profilePageLoader, profilePageAction  } from "./containers";
-import { Dashboard, MedicalRecord } from './components';
-import {  } from './components';
+import App from "./App";
+import { ErrorPage, Community } from "./layout";
+import { headLoader } from "./layout";
+import { Dashboard, Profile, Auth } from "./components";
+import { authAction, profileLoader, profileAction } from "./components";
+import { Home } from './containers';
+
 
 const router = createBrowserRouter([
     {
       path: '/',
       element: <App />,
-      errorElement: <ErrorPage />,
-      loader: appLoader,
+      errorElement: <ErrorPage />
+    },
+    { 
+      path: '/home',
+      element: <Home />,
+      errorElement: <ErrorPage />, 
+      loader: headLoader,
       children: [
-        // { index: true, element: <Home />, loader: profileLoader , childern: [{ index: true, element: <Dashboard /> }]},
+        { index:true, element: <Dashboard />},
         {
-          path: 'home',
-          element: <Home />,
+          path: 'dashboard',
+          element: <Dashboard />
+        },
+        {
+          path: 'medical-records',
+          element: <h1>Medical Record</h1>
+        },
+        {
+          path: 'appointments',
+        },
+        {
+          path: 'profile/:id/:name',
+          element: <Profile />,
           loader: profileLoader,
-          children: [
-            { index: true, element: <Dashboard /> },
-            {
-              path: 'dashboard',
-              element: <Dashboard />,
-            },
-            {
-              path: 'medical-record',
-              element: <MedicalRecord />,
-            },
-            {
-              path: 'nutrition'
-            },
-            {
-              path: 'workout',
-            },
-            {
-              path: 'appointments-and-medications',
-            },
-            {
-              path: 'chat'
-            }
-          ]
-        },
-        {
-            path: 'auth',
-            element: <Auth />,
-            action: authAction
-        },
-        {
-          path: 'community',
-          element: <Community />
-        },
-        {
-          path: 'emergency-services',
-          element: <EmergencyServices />
-        },
-        {
-          path: 'about-us',
-          element: <AboutUs />
-        },
-        {
-          path: 'profile/:id/:username',
-          element: <ProfilePage />,
-          loader: profilePageLoader,
-          action: profilePageAction
+          action: profileAction
         }
       ]
+    },
+    {
+      path: '/auth',
+      element: <Auth />,
+      action: authAction
+    },
+    {
+      path: '/community',
+      element: <Community />,
+      loader: headLoader
     }
   ])
 
