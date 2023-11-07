@@ -1,11 +1,10 @@
 import React from 'react'
-
-import { Hero } from './containers'
+import { Outlet } from 'react-router-dom'
 
 const App = () => {
   return (
     <div>
-        <Hero />
+        <Outlet />
     </div>
   )
 }

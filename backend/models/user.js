@@ -17,6 +17,9 @@ const medicalRecordSchema = new mongoose.Schema({
     diagnosis: String,
     treatments: [String], // An array of treatment options
     additionalNotes: String,
+}, 
+{
+    timestamps: true
 });
 
 
@@ -34,7 +37,12 @@ const userSchema = mongoose.Schema({
             message: (props) => `${props.value} is not a valid email!`,
         }},
     password: {type: String, required: true},
-    contactInfo: {type: String, required: true}
+    contactInfo: {type: String, required: true},
+    isVerified: {type: Boolean, default: false},
+    emailToken: String
+},
+{
+    timestamps: true
 })
 
 const User = mongoose.model('User', userSchema);

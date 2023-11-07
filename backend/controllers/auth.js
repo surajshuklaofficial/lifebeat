@@ -1,7 +1,15 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import crypto from 'node:crypto';
 
 import { User } from '../models/index.js';
+import sendVerificationMail from '../utils/sendVerificationMail.js';
+
+const createToken = (email) => {
+    const jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+    return jwt.sign({email}, jwtSecretKey, {expiresIn: '3d'});
+}
 
 const signin = async (req, res) => {
 
@@ -13,8 +21,8 @@ const signin = async (req, res) => {
         }
         const isAuth = bcrypt.compareSync(userAuthInfo.password.toString(), user.password); // return true if matched and false if not
 
-        if (isAuth) {
-            const token = jwt.sign(user.email, process.env.SECRET_KEY);
+        if (isAuth && user.isVerified) {
+            const token = createToken(user.email);
             res.status(200).json({token, userId: user._id, fullName: `${user.firstName} ${user.lastName}`});
         } else {
             res.status(401).send("UNAUTHORIZED");
@@ -36,7 +44,7 @@ const signup = async (req, res) => {
         }
         
         userInfo.password = bcrypt.hashSync(req.body.password.toString(), bcryptRounds);
-        user = new User(userInfo);
+        user = new User({...userInfo, emailToken: crypto.randomBytes(64).toString("hex")});
 
         // making sure the data is consistent
         user.email = user.email.toLowerCase();
@@ -44,12 +52,37 @@ const signup = async (req, res) => {
         user.lastName = user.lastName.toLowerCase();
         
         userInfo = await user.save();
-        const token = jwt.sign({email : userInfo.email}, process.env.SECRET_KEY);
-
-        res.status(200).json({token, userId: user._id, fullName: `${user.firstName} ${user.lastName}`});
+        
+        sendVerificationMail(userInfo);
+        
+        res.status(200).json({message: `Verification Email is sent on: ${user.email}. Please Verify!`});
     } catch (err) {
         res.status(500).json({message: err.message});
     }
 }
 
-export { signin, signup };
+const verifyEmail = async (req, res) => {
+    try {
+        const emailToken = req.body.emailToken;
+
+        if (!emailToken) return res.status(400).json({message: "EmailToken is not found..."});
+
+        const user = await User.findOne({emailToken});
+        
+        if (user) {
+            user.emailToken = null;
+            user.isVerified = true;
+
+            await user.save();
+
+            const token = createToken(user.email);
+
+            res.status(200).json({userId: user._id, fullName: `${user.firstName} ${user.lastName}`, token, isVerified: user?.isVerified})
+        } else {
+            res.status(404).json({message: "Email verification failed, invalid token!"});
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+}
+export { signin, signup, verifyEmail };

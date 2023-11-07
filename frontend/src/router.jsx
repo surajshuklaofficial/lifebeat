@@ -1,55 +1,64 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
+import { Home, EmailVerification, Hero } from './pages';
+import { emailVerifyAction } from './pages';
 import { ErrorPage, Community } from "./layout";
 import { headLoader } from "./layout";
 import { Dashboard, Profile, Auth } from "./components";
 import { authAction, profileLoader, profileAction } from "./components";
-import { Home } from './containers';
 
 
 const router = createBrowserRouter([
     {
       path: '/',
       element: <App />,
-      errorElement: <ErrorPage />
-    },
-    { 
-      path: '/home',
-      element: <Home />,
-      errorElement: <ErrorPage />, 
-      loader: headLoader,
+      errorElement: <ErrorPage />,
       children: [
-        { index:true, element: <Dashboard />},
+        {index: true, element: <Hero />},
         {
-          path: 'dashboard',
-          element: <Dashboard />
+          path: '/auth',
+          element: <Auth />,
+          action: authAction
+        },
+        { 
+          path: '/home',
+          element: <Home />,
+          errorElement: <ErrorPage />, 
+          loader: headLoader,
+          children: [
+            { index:true, element: <Dashboard />},
+            {
+              path: 'dashboard',
+              element: <Dashboard />
+            },
+            {
+              path: 'medical-records',
+              element: <h1>Medical Record</h1>
+            },
+            {
+              path: 'appointments',
+            },
+            {
+              path: 'profile/:id/:name',
+              element: <Profile />,
+              loader: profileLoader,
+              action: profileAction
+            }
+          ]
         },
         {
-          path: 'medical-records',
-          element: <h1>Medical Record</h1>
+          path: '/community',
+          element: <Community />,
+          loader: headLoader
         },
         {
-          path: 'appointments',
-        },
-        {
-          path: 'profile/:id/:name',
-          element: <Profile />,
-          loader: profileLoader,
-          action: profileAction
+          path: '/verify-email',
+          element: <EmailVerification />,
+          loader: emailVerifyAction
         }
       ]
     },
-    {
-      path: '/auth',
-      element: <Auth />,
-      action: authAction
-    },
-    {
-      path: '/community',
-      element: <Community />,
-      loader: headLoader
-    }
   ])
 
 export default router;

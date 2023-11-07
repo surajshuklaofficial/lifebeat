@@ -21,7 +21,7 @@ export const  updateMedicalRecord = (id, data) => API.patch(`/user/${id}/medical
 
 // userData.action == signin || signup
 export const auth = (userData) => API.post(`/auth/${userData.action}`, userData);
-
+export const verifyEmail = (emailVerificationToken) => API.post('/auth/verify-email', {emailToken: emailVerificationToken});
 
 
 

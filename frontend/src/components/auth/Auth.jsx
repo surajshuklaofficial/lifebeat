@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useNavigation } from "react-router-dom";
 import { auth } from "../../api";
 
 export const action = async ({ request }) => {
@@ -7,18 +7,23 @@ export const action = async ({ request }) => {
     let formData = await request.formData();
     const userData = Object.fromEntries(formData);
 
-    if (userData.action === 'signup') if (userData.password !== userData.confirmPassword) {
+    if (userData.action === 'signup' && userData.password !== userData.confirmPassword) {
       alert('Match Password!');
       return redirect('/auth');
     }
 
     const response = await auth(userData);
     
-    localStorage.setItem('token', response.data.token, 'token');
-    localStorage.setItem('userid', response.data.userId);
-    localStorage.setItem('username', response.data.fullName);
+    if (userData.action === 'signin') {
+      console.log(response);
+      localStorage.setItem('token', response.data.token, 'token');
+      localStorage.setItem('userid', response.data.userId);
+      localStorage.setItem('username', response.data.fullName);
+      return redirect("/home");
+    } else {
+      return redirect("/verify-email");
+    }
 
-    return redirect("/home/dashboard");
   } catch (error) {
     if (error?.response?.status === 409) {
       // User already exists while sign up
@@ -48,6 +53,7 @@ const Authentication = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [contactInfo, setContactInfo] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const navigation = useNavigation();
 
   const togglePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);
@@ -184,9 +190,10 @@ const Authentication = () => {
           )}
           <button
             type="submit"
-            className="w-full bg-ascent-dark text-white py-2 rounded hover:bg-ascent"
+            className={`w-full bg-ascent-dark text-white py-2 rounded hover:bg-ascent disabled:bg-gray-500`}
+            disabled={navigation.state === 'idle' ? false: true}
           >
-            {isLogin ? "Log In" : "Sign Up"}
+            {navigation.state === 'idle' ? isLogin ? "Log In" : "Sign Up" : 'Submitting...'}
           </button>
         </Form>
         <p
