@@ -12,7 +12,7 @@ const sendVerificationMail = (user) => {
         `
     };
     
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
         if (error) {
             console.log(error);
         } else {

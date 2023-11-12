@@ -5,7 +5,7 @@ const DEPLOYMENT_URL = "https://health-monitoring-system.onrender.com/api/v1";
 
 // const API = axios.create( {baseURL: DEVELOPMENT_URL} );
 const API = axios.create({
-  baseURL: DEPLOYMENT_URL,
+  baseURL: DEVELOPMENT_URL,
 });
 
 API.interceptors.request.use((req) => {
@@ -23,6 +23,13 @@ export const  updateMedicalRecord = (id, data) => API.patch(`/user/${id}/medical
 export const auth = (userData) => API.post(`/auth/${userData.action}`, userData);
 export const verifyEmail = (emailVerificationToken) => API.post('/auth/verify-email', {emailToken: emailVerificationToken});
 
+// activities
+export const fetchTodayActivity = (id) => API.get(`/user/${id}/fetch-today-activity`);
+export const createOrUpdateTodayActivity = (id, todayActivity) => API.patch(`/user/${id}/create-or-update-today-activity`, todayActivity);
+
+// gamification
+export const fetchTodayScore = (id) => API.get(`/user/${id}/fetch-today-score`);
+export const fetchWeeklyLeaderboard = (id) => API.get(`/user/${id}/fetch-weekly-leaderboard`);
 
 
 

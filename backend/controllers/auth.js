@@ -28,6 +28,7 @@ const signin = async (req, res) => {
             res.status(401).send("UNAUTHORIZED");
         }
     } catch (err) {
+        console.log(err);
         res.status(500).json({message: err.message}); // only err will be not sent so use err.message to properly send error message to th frontend
     }
     

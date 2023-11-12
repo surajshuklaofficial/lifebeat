@@ -1,8 +1,8 @@
 import React from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 const TodayScore = () => {
-  // Sample user's score data (replace with actual data)
-  const userScore = 1200; // You can replace this with the user's actual score for the day
+  const {score:userScore} = useLoaderData(); 
 
   return (
     <div className="bg-secondary-light text-primary-dark dark:bg-secondary-dark dark:text-white p-4 rounded-lg shadow-md max-h-fit  w-full" style={{height: '150px'}}>

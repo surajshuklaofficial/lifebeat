@@ -6,7 +6,7 @@ import { emailVerifyAction } from './pages';
 import { ErrorPage, Community } from "./layout";
 import { headLoader } from "./layout";
 import { Dashboard, Profile, Auth } from "./components";
-import { authAction, profileLoader, profileAction } from "./components";
+import { authAction, profileLoader, profileAction, dashboardLoader, dashboardAction } from "./components";
 
 
 const router = createBrowserRouter([
@@ -27,10 +27,12 @@ const router = createBrowserRouter([
           errorElement: <ErrorPage />, 
           loader: headLoader,
           children: [
-            { index:true, element: <Dashboard />},
+            { index:true, element: <Dashboard />, loader: dashboardLoader, action: dashboardAction},
             {
               path: 'dashboard',
-              element: <Dashboard />
+              element: <Dashboard />,
+              loader: dashboardLoader,
+              action: dashboardAction
             },
             {
               path: 'medical-records',

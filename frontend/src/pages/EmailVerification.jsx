@@ -35,7 +35,7 @@ const EmailVerification = () => {
 
   return (
     <section>
-        <p>{ !isVerified ? 'We have send an Verification email to you. Please Verify!': 'Email Verification Successfull!'}</p>
+        <p>{ !isVerified ? 'We have send an Verification email to you. Please Verify! \n May you it can take few minutes. Please Kindly wait for 5 minutes!': 'Email Verification Successfull!'}</p>
     </section>
   )
 }
